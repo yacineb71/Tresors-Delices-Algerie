@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage, useAuth } from '../App';
 import { Menu, X, Globe, User, LogOut, ShoppingCart, ExternalLink } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import { useCustomization } from '../contexts/CustomizationContext';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -12,6 +13,7 @@ const Header = () => {
   const { language, setLanguage, t } = useLanguage();
   const { user, logout } = useAuth();
   const { setIsCartOpen, getCartCount } = useCart();
+  const { customization } = useCustomization();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [navigationItems, setNavigationItems] = useState([]);
