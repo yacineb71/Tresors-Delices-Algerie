@@ -433,6 +433,8 @@ function App() {
                       <Route path="/checkout" element={<CheckoutPage />} />
                       <Route path="/page/:slug" element={<CustomPageView />} />
                       <Route path="/auth" element={<AuthPage />} />
+                      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                      <Route path="/reset-password" element={<ForgotPasswordPage />} />
                       <Route 
                         path="/profile" 
                         element={user ? <ProfilePage /> : <Navigate to="/auth" />} 
