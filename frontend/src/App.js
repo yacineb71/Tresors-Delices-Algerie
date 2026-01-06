@@ -50,6 +50,7 @@ import AdminSEO from './components/AdminSEO';
 import TestimonialsPage from './components/TestimonialsPage';
 import AccountSettings from './components/AccountSettings';
 import PromotionsPage from './components/PromotionsPage';
+import ForgotPasswordPage from './components/ForgotPasswordPage';
 import Footer from './components/Footer';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
