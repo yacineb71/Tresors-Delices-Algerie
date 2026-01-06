@@ -1335,6 +1335,35 @@ class DelicesAlgerieAPITester:
                 pass
         
         return all_success
+
+    def test_download_archives(self):
+        """Test that download archives exist"""
+        import os
+        
+        backend_zip = "/app/frontend/public/downloads/backend-delices-tresors.zip"
+        frontend_zip = "/app/frontend/public/downloads/frontend-delices-tresors.zip"
+        
+        backend_exists = os.path.exists(backend_zip)
+        frontend_exists = os.path.exists(frontend_zip)
+        
+        self.tests_run += 1
+        
+        if backend_exists and frontend_exists:
+            self.tests_passed += 1
+            backend_size = os.path.getsize(backend_zip)
+            frontend_size = os.path.getsize(frontend_zip)
+            
+            print(f"✅ Download Archives Test Passed")
+            print(f"   Backend ZIP: {backend_zip} ({backend_size} bytes)")
+            print(f"   Frontend ZIP: {frontend_zip} ({frontend_size} bytes)")
+            return True
+        else:
+            print(f"❌ Download Archives Test Failed")
+            print(f"   Backend ZIP exists: {backend_exists}")
+            print(f"   Frontend ZIP exists: {frontend_exists}")
+            return False
+
+    def test_customization_restore_original(self):
         """Restore original customization settings"""
         if not self.admin_token or not hasattr(self, 'original_customization'):
             print("❌ Cannot restore customization - no admin token or original data")
