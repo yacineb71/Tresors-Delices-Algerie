@@ -1255,6 +1255,99 @@ async def serve_uploaded_file(filename: str):
     
     return FileResponse(file_path)
 
+# --- Media Library Routes ---
+class MediaItem(BaseModel):
+    id: str
+    filename: str
+    original_name: str
+    url: str
+    mime_type: str
+    size: int
+    uploaded_at: datetime
+    uploaded_by: Optional[str] = None
+
+@api_router.get("/admin/media")
+async def get_media_library(admin: User = Depends(get_admin_user)):
+    """Get all media files in the library"""
+    try:
+        media_items = await db.media.find({}, {"_id": 0}).sort("uploaded_at", -1).to_list(1000)
+        return media_items
+    except Exception as e:
+        logger.error(f"Error fetching media library: {e}")
+        return []
+
+@api_router.post("/admin/media/upload")
+async def upload_media(
+    file: UploadFile = File(...),
+    admin: User = Depends(get_admin_user)
+):
+    """Upload a file to the media library"""
+    try:
+        # Generate unique filename
+        file_extension = Path(file.filename).suffix.lower()
+        unique_filename = f"{uuid.uuid4()}{file_extension}"
+        file_path = UPLOAD_DIR / unique_filename
+        
+        # Read file content and size
+        content = await file.read()
+        file_size = len(content)
+        
+        # Save file
+        async with aiofiles.open(file_path, 'wb') as out_file:
+            await out_file.write(content)
+        
+        # Create media record
+        media_item = {
+            "id": str(uuid.uuid4()),
+            "filename": unique_filename,
+            "original_name": file.filename,
+            "url": f"/api/uploads/{unique_filename}",
+            "mime_type": file.content_type or "application/octet-stream",
+            "size": file_size,
+            "uploaded_at": datetime.now(timezone.utc),
+            "uploaded_by": admin.email
+        }
+        
+        await db.media.insert_one(media_item)
+        
+        # Remove _id for response
+        media_item.pop("_id", None)
+        
+        return media_item
+        
+    except Exception as e:
+        logger.error(f"Error uploading to media library: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.delete("/admin/media/{media_id}")
+async def delete_media(
+    media_id: str,
+    admin: User = Depends(get_admin_user)
+):
+    """Delete a file from the media library"""
+    try:
+        # Find media record
+        media = await db.media.find_one({"id": media_id})
+        
+        if not media:
+            raise HTTPException(status_code=404, detail="Media not found")
+        
+        # Delete file from disk
+        file_path = UPLOAD_DIR / media["filename"]
+        if file_path.exists():
+            file_path.unlink()
+        
+        # Delete from database
+        await db.media.delete_one({"id": media_id})
+        
+        return {"success": True, "message": "Media deleted successfully"}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting media: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # --- Order Routes ---
 @api_router.post("/orders", response_model=Order)
 async def create_order(order_data: OrderCreate, background_tasks: BackgroundTasks):
