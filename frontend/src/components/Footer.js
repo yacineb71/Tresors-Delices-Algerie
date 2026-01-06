@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../App';
+import { useCustomization } from '../contexts/CustomizationContext';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import axios from 'axios';
 import NewsletterSection from './NewsletterSection';
@@ -10,6 +11,7 @@ const API = `${BACKEND_URL}/api`;
 
 const Footer = () => {
   const { language } = useLanguage();
+  const { customization } = useCustomization();
   const [footerSettings, setFooterSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
