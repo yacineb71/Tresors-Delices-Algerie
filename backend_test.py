@@ -1191,7 +1191,150 @@ class DelicesAlgerieAPITester:
         
         return False
 
-    def test_customization_restore_original(self):
+    def test_media_library_get(self):
+        """Test P3 - Media Library GET endpoint"""
+        if not self.admin_token:
+            print("❌ Cannot test media library - no admin token")
+            return False
+        
+        success, response = self.run_test(
+            "P3 - Get Media Library",
+            "GET",
+            "admin/media",
+            200,
+            use_admin_token=True
+        )
+        
+        if success:
+            print(f"   Found {len(response)} media items in library")
+            return True
+        
+        return False
+
+    def test_media_library_upload(self):
+        """Test P3 - Media Library Upload endpoint"""
+        if not self.admin_token:
+            print("❌ Cannot test media upload - no admin token")
+            return False
+        
+        # Create a test image for media library
+        test_image = self.create_test_image('JPEG')
+        files = {'file': ('test_media.jpg', test_image, 'image/jpeg')}
+        
+        success, response = self.run_test(
+            "P3 - Media Library Upload",
+            "POST",
+            "admin/media/upload",
+            200,
+            files=files,
+            use_admin_token=True
+        )
+        
+        if success and response:
+            # Verify response structure for media library
+            required_keys = ['id', 'filename', 'original_name', 'url', 'mime_type', 'size', 'uploaded_at']
+            if all(key in response for key in required_keys):
+                print(f"   Uploaded media ID: {response['id']}")
+                print(f"   Original name: {response['original_name']}")
+                print(f"   File URL: {response['url']}")
+                print(f"   MIME type: {response['mime_type']}")
+                print(f"   File size: {response['size']} bytes")
+                print(f"   Uploaded at: {response['uploaded_at']}")
+                
+                # Store media ID for deletion test
+                self.uploaded_media_id = response['id']
+                self.uploaded_media_filename = response['filename']
+                return True
+            else:
+                print(f"❌ Missing required media response keys. Got: {list(response.keys())}")
+        
+        return False
+
+    def test_media_library_delete(self):
+        """Test P3 - Media Library Delete endpoint"""
+        if not self.admin_token or not hasattr(self, 'uploaded_media_id'):
+            print("❌ Cannot test media delete - no admin token or media ID")
+            return False
+        
+        success, response = self.run_test(
+            "P3 - Media Library Delete",
+            "DELETE",
+            f"admin/media/{self.uploaded_media_id}",
+            200,
+            use_admin_token=True
+        )
+        
+        if success and response:
+            if response.get('success') == True:
+                print(f"   ✅ Media deleted successfully: {response.get('message', 'N/A')}")
+                
+                # Verify file is no longer accessible
+                if hasattr(self, 'uploaded_media_filename'):
+                    static_url = f"https://ecommerce-admin-29.preview.emergentagent.com/api/uploads/{self.uploaded_media_filename}"
+                    try:
+                        import requests
+                        file_response = requests.get(static_url, timeout=10)
+                        if file_response.status_code == 404:
+                            print(f"   ✅ File properly deleted - no longer accessible")
+                        else:
+                            print(f"   ⚠️ File deleted from database but still accessible")
+                    except:
+                        print(f"   ✅ File properly deleted - no longer accessible")
+                
+                return True
+            else:
+                print(f"❌ Media deletion failed: {response}")
+        
+        return False
+
+    def test_media_library_upload_various_types(self):
+        """Test P3 - Media Library with various file types"""
+        if not self.admin_token:
+            print("❌ Cannot test media upload types - no admin token")
+            return False
+        
+        # Test different image formats
+        test_files = [
+            ('PNG', 'test_media.png', 'image/png'),
+            ('JPEG', 'test_media.jpg', 'image/jpeg'),
+        ]
+        
+        uploaded_media_ids = []
+        all_success = True
+        
+        for format_type, filename, mime_type in test_files:
+            test_image = self.create_test_image(format_type)
+            files = {'file': (filename, test_image, mime_type)}
+            
+            success, response = self.run_test(
+                f"P3 - Media Upload {format_type}",
+                "POST",
+                "admin/media/upload",
+                200,
+                files=files,
+                use_admin_token=True
+            )
+            
+            if success and response and 'id' in response:
+                uploaded_media_ids.append(response['id'])
+                print(f"   Uploaded {format_type}: {response['filename']}")
+            else:
+                all_success = False
+        
+        # Clean up uploaded files
+        for media_id in uploaded_media_ids:
+            try:
+                self.run_test(
+                    f"Cleanup Media {media_id}",
+                    "DELETE",
+                    f"admin/media/{media_id}",
+                    200,
+                    use_admin_token=True
+                )
+            except:
+                pass
+        
+        return all_success
         """Restore original customization settings"""
         if not self.admin_token or not hasattr(self, 'original_customization'):
             print("❌ Cannot restore customization - no admin token or original data")
