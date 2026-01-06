@@ -380,6 +380,16 @@ function App() {
                 )
               } />
               
+              <Route path="/admin/media" element={
+                user?.role === 'admin' ? (
+                  <AdminLayout>
+                    <AdminMediaLibrary />
+                  </AdminLayout>
+                ) : (
+                  <Navigate to="/auth" />
+                )
+              } />
+              
               {/* Admin Form Routes */}
               <Route path="/admin/products/new" element={
                 user?.role === 'admin' ? (
