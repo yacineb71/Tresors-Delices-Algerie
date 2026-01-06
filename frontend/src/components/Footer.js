@@ -89,9 +89,19 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="space-y-4">
-            <Link to="/" className="inline-block">
-              <h3 className="text-2xl font-bold text-[#D4AF37] hover:text-[#c9a135] transition-colors cursor-pointer">
-                Délices et Trésors
+            <Link to="/" className="inline-flex items-center space-x-3">
+              {customization.logo_url ? (
+                <img 
+                  src={customization.logo_url} 
+                  alt="Logo" 
+                  className="h-10 w-auto object-contain brightness-0 invert"
+                />
+              ) : null}
+              <h3 
+                className="text-2xl font-bold hover:opacity-80 transition-colors cursor-pointer"
+                style={{ color: 'var(--color-accent)', fontFamily: 'var(--font-heading)' }}
+              >
+                {customization.site_name || 'Délices et Trésors'}
               </h3>
             </Link>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -107,7 +117,8 @@ const Footer = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-[#6B8E23] flex items-center justify-center hover:bg-[#5a7a1d] transition-colors duration-200"
+                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                    style={{ backgroundColor: 'var(--color-primary)' }}
                     aria-label={social.name}
                   >
                     {getSocialIcon(social.icon)}
