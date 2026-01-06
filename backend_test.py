@@ -1929,8 +1929,23 @@ class DelicesAlgerieAPITester:
 
 def main():
     tester = DelicesAlgerieAPITester()
-    success = tester.run_all_tests()
-    return 0 if success else 1
+    
+    # Run P1, P2, P3 specific tests
+    print("🚀 Starting P1, P2, P3 Feature Testing for Délices et Trésors d'Algérie")
+    print("=" * 70)
+    
+    success = tester.run_p1_p2_p3_tests()
+    
+    # Print final results
+    print("\n" + "=" * 70)
+    print(f"📊 Final Results: {tester.tests_passed}/{tester.tests_run} tests passed")
+    
+    if success:
+        print("🎉 All P1, P2, P3 features are working correctly!")
+        return 0
+    else:
+        print("⚠️ Some P1, P2, P3 features have issues")
+        return 1
 
 if __name__ == "__main__":
     sys.exit(main())
