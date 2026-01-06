@@ -1083,13 +1083,13 @@ class DelicesAlgerieAPITester:
         return False
 
     def test_customization_admin_get(self):
-        """Test admin customization GET endpoint"""
+        """Test admin customization GET endpoint (P1 feature)"""
         if not self.admin_token:
             print("❌ Cannot test admin customization - no admin token")
             return False
         
         success, response = self.run_test(
-            "Get Admin Customization",
+            "P1 - Get Admin Customization",
             "GET",
             "admin/customization",
             200,
