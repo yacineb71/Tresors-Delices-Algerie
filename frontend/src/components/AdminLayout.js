@@ -133,6 +133,11 @@ const AdminLayout = ({ children }) => {
       icon: Palette
     },
     {
+      name: language === 'ar' ? 'مكتبة الوسائط' : language === 'en' ? 'Media Library' : 'Bibliothèque média',
+      href: '/admin/media',
+      icon: FolderOpen
+    },
+    {
       name: language === 'ar' ? 'الإعدادات' : language === 'en' ? 'Settings' : 'Paramètres',
       href: '/admin/settings',
       icon: Settings
