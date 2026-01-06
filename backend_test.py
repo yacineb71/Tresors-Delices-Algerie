@@ -1572,6 +1572,30 @@ class DelicesAlgerieAPITester:
             except Exception as e:
                 print(f"   ❌ Error deleting {filename}: {str(e)}")
 
+    def run_password_reset_tests(self):
+        """Run comprehensive password reset tests"""
+        print("\n🔐 Starting Password Reset Tests")
+        print("=" * 50)
+        
+        # Test basic password reset flow
+        self.test_forgot_password_request()
+        self.test_forgot_password_invalid_email()
+        self.test_forgot_password_malformed_email()
+        
+        # Test token verification
+        self.test_verify_reset_token_invalid()
+        
+        # Test password reset with various scenarios
+        self.test_reset_password_invalid_token()
+        self.test_reset_password_short_password()
+        
+        # Test complete flow and security measures
+        self.test_complete_password_reset_flow()
+        self.test_password_reset_security_measures()
+        self.test_password_reset_rate_limiting()
+        
+        return True
+
     def run_ecommerce_tests(self):
         """Run comprehensive e-commerce tests for Délices et Trésors d'Algérie"""
         print("\n🛒 Starting E-commerce Tests")
