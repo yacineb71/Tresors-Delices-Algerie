@@ -1152,9 +1152,9 @@ class DelicesAlgerieAPITester:
         return False
 
     def test_customization_public_reflects_changes(self):
-        """Test that public endpoint reflects admin changes"""
+        """Test that public endpoint reflects admin changes (P2 - Dynamic Styles)"""
         success, response = self.run_test(
-            "Verify Public Customization Changes",
+            "P2 - Verify Public Customization Changes",
             "GET",
             "customization",
             200
@@ -1166,16 +1166,22 @@ class DelicesAlgerieAPITester:
             expected_secondary = "#33FF57"
             expected_accent = "#3357FF"
             expected_site_name = "Délices et Trésors d'Algérie - Test"
+            expected_font_heading = "Georgia"
+            expected_font_body = "Arial"
             
             if (response.get('primary_color') == expected_primary and
                 response.get('secondary_color') == expected_secondary and
                 response.get('accent_color') == expected_accent and
-                response.get('site_name') == expected_site_name):
-                print(f"   ✅ Public endpoint reflects admin changes")
+                response.get('site_name') == expected_site_name and
+                response.get('font_heading') == expected_font_heading and
+                response.get('font_body') == expected_font_body):
+                print(f"   ✅ Public endpoint reflects admin changes (P2 Dynamic Styles working)")
                 print(f"   Primary color: {response.get('primary_color')}")
                 print(f"   Secondary color: {response.get('secondary_color')}")
                 print(f"   Accent color: {response.get('accent_color')}")
                 print(f"   Site name: {response.get('site_name')}")
+                print(f"   Heading font: {response.get('font_heading')}")
+                print(f"   Body font: {response.get('font_body')}")
                 return True
             else:
                 print(f"❌ Public endpoint does not reflect admin changes")
