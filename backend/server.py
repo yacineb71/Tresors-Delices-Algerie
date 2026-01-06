@@ -658,6 +658,201 @@ async def login(user_credentials: UserLogin):
 async def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
 
+# --- Password Reset Routes ---
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
+
+@api_router.post("/auth/forgot-password")
+async def forgot_password(request: PasswordResetRequest, background_tasks: BackgroundTasks):
+    """Request a password reset email"""
+    user = await db.users.find_one({"email": request.email})
+    
+    # Always return success to prevent email enumeration attacks
+    if not user:
+        return {"message": "If this email exists, a reset link has been sent"}
+    
+    # Generate reset token (valid for 1 hour)
+    reset_token = str(uuid.uuid4())
+    reset_expires = datetime.now(timezone.utc) + timedelta(hours=1)
+    
+    # Store the reset token in the database
+    await db.password_resets.delete_many({"email": request.email})  # Remove old tokens
+    await db.password_resets.insert_one({
+        "email": request.email,
+        "token": reset_token,
+        "expires_at": reset_expires,
+        "created_at": datetime.now(timezone.utc)
+    })
+    
+    # Send reset email in background
+    background_tasks.add_task(
+        send_password_reset_email,
+        request.email,
+        user.get("full_name", ""),
+        reset_token
+    )
+    
+    return {"message": "If this email exists, a reset link has been sent"}
+
+@api_router.post("/auth/reset-password")
+async def reset_password(request: PasswordResetConfirm):
+    """Reset password with token"""
+    # Find the reset token
+    reset_record = await db.password_resets.find_one({"token": request.token})
+    
+    if not reset_record:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid or expired reset token"
+        )
+    
+    # Check if token is expired
+    expires_at = reset_record["expires_at"]
+    if isinstance(expires_at, datetime):
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+    
+    if datetime.now(timezone.utc) > expires_at:
+        await db.password_resets.delete_one({"token": request.token})
+        raise HTTPException(
+            status_code=400,
+            detail="Reset token has expired"
+        )
+    
+    # Validate password length
+    if len(request.new_password) < 6:
+        raise HTTPException(
+            status_code=400,
+            detail="Password must be at least 6 characters"
+        )
+    
+    # Update the user's password
+    hashed_password = get_password_hash(request.new_password)
+    result = await db.users.update_one(
+        {"email": reset_record["email"]},
+        {"$set": {"hashed_password": hashed_password}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Failed to update password"
+        )
+    
+    # Delete the used token
+    await db.password_resets.delete_one({"token": request.token})
+    
+    return {"message": "Password has been reset successfully"}
+
+@api_router.get("/auth/verify-reset-token/{token}")
+async def verify_reset_token(token: str):
+    """Verify if a reset token is valid"""
+    reset_record = await db.password_resets.find_one({"token": token})
+    
+    if not reset_record:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid reset token"
+        )
+    
+    expires_at = reset_record["expires_at"]
+    if isinstance(expires_at, datetime):
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+    
+    if datetime.now(timezone.utc) > expires_at:
+        await db.password_resets.delete_one({"token": token})
+        raise HTTPException(
+            status_code=400,
+            detail="Reset token has expired"
+        )
+    
+    return {"valid": True, "email": reset_record["email"]}
+
+def send_password_reset_email(email: str, full_name: str, token: str):
+    """Send password reset email"""
+    try:
+        from email_service import email_service
+        
+        # Get the frontend URL from environment or use default
+        frontend_url = os.environ.get('FRONTEND_URL', 'https://ecommerce-admin-29.preview.emergentagent.com')
+        reset_link = f"{frontend_url}/reset-password?token={token}"
+        
+        subject = "Réinitialisation de votre mot de passe - Délices et Trésors d'Algérie"
+        
+        body_text = f"""
+Bonjour {full_name or 'cher client'},
+
+Vous avez demandé la réinitialisation de votre mot de passe.
+
+Cliquez sur le lien suivant pour créer un nouveau mot de passe :
+{reset_link}
+
+Ce lien est valable pendant 1 heure.
+
+Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet email.
+
+Cordialement,
+L'équipe Délices et Trésors d'Algérie
+        """
+        
+        body_html = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #6B8E23; margin: 0;">Délices et Trésors d'Algérie</h1>
+                </div>
+                
+                <h2 style="color: #333;">Réinitialisation de mot de passe</h2>
+                
+                <p>Bonjour {full_name or 'cher client'},</p>
+                
+                <p>Vous avez demandé la réinitialisation de votre mot de passe.</p>
+                
+                <p>Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe :</p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{reset_link}" 
+                       style="background: linear-gradient(135deg, #F59E0B 0%, #6B8E23 100%); 
+                              color: white; 
+                              padding: 15px 30px; 
+                              text-decoration: none; 
+                              border-radius: 8px; 
+                              font-weight: bold;
+                              display: inline-block;">
+                        Réinitialiser mon mot de passe
+                    </a>
+                </div>
+                
+                <p style="color: #666; font-size: 14px;">
+                    Ce lien est valable pendant <strong>1 heure</strong>.
+                </p>
+                
+                <p style="color: #666; font-size: 14px;">
+                    Si vous n'avez pas demandé cette réinitialisation, ignorez simplement cet email.
+                </p>
+                
+                <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                
+                <p style="color: #999; font-size: 12px; text-align: center;">
+                    Cet email a été envoyé par Délices et Trésors d'Algérie.<br>
+                    Si le bouton ne fonctionne pas, copiez ce lien : {reset_link}
+                </p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        email_service.send_email(email, subject, body_text, body_html)
+        
+    except Exception as e:
+        logger.error(f"Error sending password reset email: {e}")
+
 # --- User Profile Routes ---
 @api_router.put("/users/me", response_model=User)
 async def update_user_profile(
