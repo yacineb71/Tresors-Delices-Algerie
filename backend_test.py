@@ -1665,6 +1665,9 @@ class DelicesAlgerieAPITester:
             else:
                 self.test_get_user_profile()
         
+        # Test password reset functionality
+        self.run_password_reset_tests()
+        
         # Test public endpoints
         self.test_get_products()
         self.test_get_products_by_category()
