@@ -47,6 +47,7 @@ import AdminBanners from './components/AdminBanners';
 import AdminPromoCodes from './components/AdminPromoCodes';
 import AdminInventory from './components/AdminInventory';
 import AdminSEO from './components/AdminSEO';
+import AdminMediaLibrary from './components/AdminMediaLibrary';
 import TestimonialsPage from './components/TestimonialsPage';
 import AccountSettings from './components/AccountSettings';
 import PromotionsPage from './components/PromotionsPage';
