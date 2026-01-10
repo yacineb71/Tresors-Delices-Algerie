@@ -6,6 +6,9 @@ import { CartProvider } from './contexts/CartContext';
 import { CustomizationProvider, useCustomization } from './contexts/CustomizationContext';
 import ScrollToTop from './components/ScrollToTop';
 
+// Configure axios defaults for CORS
+axios.defaults.withCredentials = true;
+
 // Components
 import Header from './components/Header';
 import HomePage from './components/HomePageNew';
