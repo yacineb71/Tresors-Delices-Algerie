@@ -434,6 +434,7 @@ function App() {
               } />
               
               {/* Public Routes */}
+              <Route path="/downloads" element={<DownloadsPage />} />
               <Route path="/*" element={
                 <>
                   <Header />
