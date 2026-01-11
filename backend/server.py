@@ -2531,6 +2531,33 @@ async def get_public_settings():
     return settings
 
 
+# --- Download Routes ---
+DOWNLOADS_DIR = Path(__file__).parent.parent / "frontend" / "public" / "downloads"
+
+@api_router.get("/download/{filename}")
+async def download_file(filename: str):
+    """Serve downloadable ZIP files"""
+    # Security: only allow specific files
+    allowed_files = [
+        "frontend-netlify-delices.zip",
+        "backend-delices.zip", 
+        "database-export-fresh.zip",
+        "complete-project-export.zip"
+    ]
+    
+    if filename not in allowed_files:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    file_path = DOWNLOADS_DIR / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    return FileResponse(
+        path=str(file_path),
+        filename=filename,
+        media_type="application/zip"
+    )
+
 # --- Basic Routes ---
 @api_router.get("/")
 async def root():
