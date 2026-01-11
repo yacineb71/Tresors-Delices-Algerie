@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Téléchargements - Délices et Trésors d'Algérie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f5dc 0%, #fff8e7 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        h1 {
+            color: #8B7355;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .download-card {
+            border: 2px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .download-card:hover {
+            border-color: #8B7355;
+            box-shadow: 0 4px 12px rgba(139,115,85,0.2);
+        }
+        .download-card h3 {
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .download-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .download-card .size {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #8B7355;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .download-btn:hover {
+            background: #6d5a43;
+        }
+        .icon { font-size: 24px; }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #8B7355;
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        .note strong { color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Téléchargements</h1>
+        <p class="subtitle">Archives du projet Délices et Trésors d'Algérie</p>
+
+        <div class="download-card">
+            <h3><span class="icon">🌐</span> Frontend (Netlify)</h3>
+            <p>Code source React complet avec configuration Netlify, guide de déploiement et fichier .env.example</p>
+            <div class="size">Taille: ~407 Ko</div>
+            <a href="/api/download/frontend-netlify-delices.zip" class="download-btn" download>
+                ⬇️ Télécharger Frontend
+            </a>
+        </div>
+
+        <div class="download-card">
+            <h3><span class="icon">⚙️</span> Backend (FastAPI)</h3>
+            <p>API Python FastAPI avec guide de déploiement pour Heroku, Railway ou Render. Inclut les images uploadées.</p>
+            <div class="size">Taille: ~1.6 Mo</div>
+            <a href="/api/download/backend-delices.zip" class="download-btn" download>
+                ⬇️ Télécharger Backend
+            </a>
+        </div>
+
+        <div class="download-card">
+            <h3><span class="icon">🗄️</span> Base de données</h3>
+            <p>Export MongoDB complet (produits, catégories, utilisateurs, commandes, paramètres...)</p>
+            <div class="size">Taille: ~35 Ko</div>
+            <a href="/api/download/database-export-fresh.zip" class="download-btn" download>
+                ⬇️ Télécharger Database
+            </a>
+        </div>
+
+        <div class="note">
+            <strong>💡 Conseil :</strong> Pour déployer sur Netlify, téléchargez le Frontend, modifiez le fichier 
+            <code>netlify.toml</code> avec l'URL de votre backend, puis glissez-déposez le dossier sur Netlify.
+        </div>
+
+        <a href="/" class="back-link">← Retour au site</a>
+    </div>
+</body>
+</html>
