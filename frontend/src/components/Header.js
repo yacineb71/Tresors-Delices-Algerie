@@ -6,7 +6,7 @@ import { useCart } from '../contexts/CartContext';
 import { useCustomization } from '../contexts/CustomizationContext';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const Header = () => {

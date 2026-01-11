@@ -4,7 +4,7 @@ import { Package, Eye, Clock, Truck, CheckCircle, XCircle } from 'lucide-react';
 import { useAuth, useLanguage } from '../App';
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 export default function MyOrders() {

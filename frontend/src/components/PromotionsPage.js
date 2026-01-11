@@ -3,7 +3,7 @@ import { useLanguage } from '../App';
 import { Tag, Copy, Check, Calendar, Percent, Euro } from 'lucide-react';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const PromotionsPage = () => {

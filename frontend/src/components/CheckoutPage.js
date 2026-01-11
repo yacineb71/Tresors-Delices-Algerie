@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ShoppingBag, CheckCircle, CreditCard, Banknote, Building2 } from 'lucide-react';
 import PaymentInfo from './PaymentInfo';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 export default function CheckoutPage() {

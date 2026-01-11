@@ -4,7 +4,7 @@ import { ShoppingBag, Star, Search, Filter, Heart, Eye, ShoppingCart } from 'luc
 import axios from 'axios';
 import { useCart } from '../contexts/CartContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const ShopPage = () => {

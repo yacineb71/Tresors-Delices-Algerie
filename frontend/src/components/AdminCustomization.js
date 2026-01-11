@@ -5,7 +5,7 @@ import { Save, Upload, Palette, Type, Image as ImageIcon, Eye } from 'lucide-rea
 import axios from 'axios';
 import ImageUpload from './ImageUpload';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 const AdminCustomization = () => {
