@@ -57,7 +57,8 @@ import PromotionsPage from './components/PromotionsPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
 import Footer from './components/Footer';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// Use relative URLs if BACKEND_URL is not set (works on any domain)
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 // Language Context
