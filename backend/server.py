@@ -2532,7 +2532,8 @@ async def get_public_settings():
 
 
 # --- Download Routes ---
-DOWNLOADS_DIR = Path(__file__).parent.parent / "frontend" / "public" / "downloads"
+# Use uploads directory which is already mounted and accessible
+DOWNLOADS_DIR = Path(__file__).parent / "uploads"
 
 @api_router.get("/download/{filename}")
 async def download_file(filename: str):
@@ -2546,16 +2547,17 @@ async def download_file(filename: str):
     ]
     
     if filename not in allowed_files:
-        raise HTTPException(status_code=404, detail="File not found")
+        raise HTTPException(status_code=404, detail=f"File {filename} not allowed")
     
     file_path = DOWNLOADS_DIR / filename
     if not file_path.exists():
-        raise HTTPException(status_code=404, detail="File not found")
+        raise HTTPException(status_code=404, detail=f"File {filename} not found at {file_path}")
     
     return FileResponse(
         path=str(file_path),
         filename=filename,
-        media_type="application/zip"
+        media_type="application/zip",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
     )
 
 # --- Basic Routes ---
