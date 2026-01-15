@@ -123,7 +123,9 @@ const Header = () => {
             <div className="relative">
               <button
                 onClick={toggleLanguageMenu}
-                className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-olive transition-colors duration-200"
+                className={`flex items-center space-x-2 px-3 py-2 transition-colors duration-200 ${
+                  isLuxuryMode ? 'text-yellow-400 hover:text-yellow-300' : 'text-gray-700 hover:text-olive'
+                }`}
               >
                 <Globe size={20} />
                 <span className="text-sm">
@@ -132,7 +134,9 @@ const Header = () => {
               </button>
               
               {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg border z-50 ${
+                  isLuxuryMode ? 'bg-gray-900 border-yellow-500/30' : 'bg-white border-gray-200'
+                }`}>
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
@@ -140,8 +144,10 @@ const Header = () => {
                         setLanguage(lang.code);
                         setIsLanguageMenuOpen(false);
                       }}
-                      className={`w-full text-left px-4 py-2 hover:bg-olive-light transition-colors duration-200 flex items-center space-x-3 ${
-                        language === lang.code ? 'bg-olive-light text-olive' : 'text-gray-700'
+                      className={`w-full text-left px-4 py-2 transition-colors duration-200 flex items-center space-x-3 ${
+                        language === lang.code 
+                          ? isLuxuryMode ? 'bg-yellow-500/20 text-yellow-400' : 'bg-olive-light text-olive'
+                          : isLuxuryMode ? 'text-gray-300 hover:bg-yellow-500/10' : 'text-gray-700 hover:bg-olive-light'
                       }`}
                     >
                       <span>{lang.flag}</span>
@@ -151,6 +157,22 @@ const Header = () => {
                 </div>
               )}
             </div>
+
+            {/* Luxury Mode Toggle */}
+            <button
+              onClick={toggleLuxuryMode}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-300 ${
+                isLuxuryMode 
+                  ? 'bg-gradient-to-r from-yellow-600 to-yellow-500 text-black shadow-[0_0_15px_rgba(234,179,8,0.4)]' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+              title={isLuxuryMode ? 'Mode Normal' : 'Mode Luxe'}
+            >
+              <Crown size={18} className={isLuxuryMode ? 'text-black' : ''} />
+              <span className="text-xs font-semibold hidden xl:block">
+                {isLuxuryMode ? 'LUXE' : 'Luxe'}
+              </span>
+            </button>
 
             {/* Cart Button */}
             <button
