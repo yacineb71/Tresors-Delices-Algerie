@@ -15,6 +15,7 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { setIsCartOpen, getCartCount } = useCart();
   const { customization } = useCustomization();
+  const { isLuxuryMode, toggleLuxuryMode } = useLuxuryMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [navigationItems, setNavigationItems] = useState([]);
