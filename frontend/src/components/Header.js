@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage, useAuth } from '../App';
-import { Menu, X, Globe, User, LogOut, ShoppingCart, ExternalLink } from 'lucide-react';
+import { Menu, X, Globe, User, LogOut, ShoppingCart, ExternalLink, Crown } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useCustomization } from '../contexts/CustomizationContext';
+import { useLuxuryMode } from '../contexts/LuxuryModeContext';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
