@@ -4,6 +4,7 @@ import axios from 'axios';
 import './App.css';
 import { CartProvider } from './contexts/CartContext';
 import { CustomizationProvider, useCustomization } from './contexts/CustomizationContext';
+import { LuxuryModeProvider } from './contexts/LuxuryModeContext';
 import ScrollToTop from './components/ScrollToTop';
 
 // Configure axios defaults for CORS
@@ -12,6 +13,7 @@ axios.defaults.withCredentials = true;
 // Components
 import Header from './components/Header';
 import HomePage from './components/HomePageNew';
+import VideoHero from './components/VideoHero';
 // RecipesPage removed - focusing on dates and olive oil
 import ShopPage from './components/ShopPage';
 import HistoryPage from './components/HistoryPage';
