@@ -204,15 +204,16 @@ function App() {
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       <AuthContext.Provider value={{ user, login, register, logout }}>
         <CustomizationProvider>
-          <CartProvider>
-            <div className="App">
-              <Toaster />
-              <BrowserRouter>
-                <ScrollToTop />
-                <Cart />
-            <Routes>
-              {/* Admin Routes */}
-              <Route path="/admin" element={
+          <LuxuryModeProvider>
+            <CartProvider>
+              <div className="App">
+                <Toaster />
+                <BrowserRouter>
+                  <ScrollToTop />
+                  <Cart />
+              <Routes>
+                {/* Admin Routes */}
+                <Route path="/admin" element={
                 user?.role === 'admin' ? (
                   <AdminLayout>
                     <AdminDashboard />
