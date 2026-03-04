@@ -64,7 +64,7 @@ const HomePageNew = () => {
                 'Our Premium Products' :
                 'Nos Produits d\'Exception'}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className={`text-xl max-w-3xl mx-auto ${isLuxuryMode ? 'text-gray-400' : 'text-gray-600'}`}>
               {language === 'ar' ?
                 'اكتشف أجود المنتجات الجزائرية الطبيعية' :
                 language === 'en' ?
