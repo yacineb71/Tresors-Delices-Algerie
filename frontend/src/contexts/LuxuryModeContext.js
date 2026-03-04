@@ -14,23 +14,21 @@ export const LuxuryModeProvider = ({ children }) => {
   const [isLuxuryMode, setIsLuxuryMode] = useState(false); // Default to false - normal light theme
 
   useEffect(() => {
-    localStorage.setItem('luxuryMode', isLuxuryMode);
-    
-    // Apply luxury mode classes to body
-    if (isLuxuryMode) {
-      document.body.classList.add('luxury-mode');
-      document.documentElement.style.setProperty('--bg-primary', '#0a0a0a');
-      document.documentElement.style.setProperty('--bg-secondary', '#1a1a1a');
-      document.documentElement.style.setProperty('--text-primary', '#ffd700');
-      document.documentElement.style.setProperty('--text-secondary', '#d4af37');
-      document.documentElement.style.setProperty('--accent', '#b8860b');
-    } else {
+    // Clear any old localStorage value to ensure light theme by default
+    if (!isLuxuryMode) {
+      localStorage.removeItem('luxuryMode');
       document.body.classList.remove('luxury-mode');
       document.documentElement.style.removeProperty('--bg-primary');
       document.documentElement.style.removeProperty('--bg-secondary');
       document.documentElement.style.removeProperty('--text-primary');
       document.documentElement.style.removeProperty('--text-secondary');
       document.documentElement.style.removeProperty('--accent');
+    }
+    
+    // Apply luxury mode classes to body only when enabled
+    if (isLuxuryMode) {
+      document.body.classList.add('luxury-mode');
+      localStorage.setItem('luxuryMode', 'true');
     }
   }, [isLuxuryMode]);
 
