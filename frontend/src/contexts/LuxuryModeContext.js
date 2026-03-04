@@ -11,10 +11,7 @@ export const useLuxuryMode = () => {
 };
 
 export const LuxuryModeProvider = ({ children }) => {
-  const [isLuxuryMode, setIsLuxuryMode] = useState(() => {
-    const saved = localStorage.getItem('luxuryMode');
-    return saved === 'true';
-  });
+  const [isLuxuryMode, setIsLuxuryMode] = useState(false); // Default to false - normal light theme
 
   useEffect(() => {
     localStorage.setItem('luxuryMode', isLuxuryMode);
