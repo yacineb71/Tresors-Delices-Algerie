@@ -475,7 +475,8 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-          </CartProvider>
+            </CartProvider>
+          </LuxuryModeProvider>
         </CustomizationProvider>
       </AuthContext.Provider>
     </LanguageContext.Provider>
