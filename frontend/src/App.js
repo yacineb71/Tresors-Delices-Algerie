@@ -440,12 +440,18 @@ function App() {
               
               {/* Public Routes */}
               <Route path="/downloads" element={<DownloadsPage />} />
+              
+              {/* Brand Pages - No Header */}
+              <Route path="/marques/aswel" element={<BrandAswelPage />} />
+              <Route path="/marques/baghlia" element={<BrandBaghliaPage />} />
+              <Route path="/marques/dahbia" element={<BrandDahbiaPage />} />
+              
               <Route path="/*" element={
                 <>
                   <Header />
                   <main className="min-h-screen">
                     <Routes>
-                      <Route path="/" element={<HomePage />} />
+                      <Route path="/" element={<ModernHomePage />} />
                       {/* Recipes removed - Délices et Trésors d'Algérie focuses on dates and olive oil */}
                       <Route path="/shop" element={<ShopPage />} />
                       <Route path="/history" element={<HistoryPage />} />
