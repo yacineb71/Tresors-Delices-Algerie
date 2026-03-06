@@ -447,6 +447,8 @@ function App() {
               <Route path="/marques/aswel" element={<BrandAswelPage />} />
               <Route path="/marques/baghlia" element={<BrandBaghliaPage />} />
               <Route path="/marques/dahbia" element={<BrandDahbiaPage />} />
+              <Route path="/coffrets" element={<CoffretsPage />} />
+              <Route path="/notre-histoire" element={<NotreHistoirePage />} />
               
               <Route path="/*" element={
                 <>
@@ -456,7 +458,7 @@ function App() {
                       <Route path="/" element={<ModernHomePage />} />
                       {/* Recipes removed - Délices et Trésors d'Algérie focuses on dates and olive oil */}
                       <Route path="/shop" element={<ShopPage />} />
-                      <Route path="/history" element={<HistoryPage />} />
+                      <Route path="/history" element={<NotreHistoirePage />} />
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/testimonials" element={<TestimonialsPage />} />
                       <Route path="/promotions" element={<PromotionsPage />} />
