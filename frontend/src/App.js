@@ -12,8 +12,10 @@ axios.defaults.withCredentials = true;
 
 // Components
 import Header from './components/Header';
-import HomePage from './components/HomePageNew';
-import VideoHero from './components/VideoHero';
+import ModernHomePage from './components/ModernHomePage';
+import BrandAswelPage from './components/BrandAswelPage';
+import BrandBaghliaPage from './components/BrandBaghliaPage';
+import BrandDahbiaPage from './components/BrandDahbiaPage';
 // RecipesPage removed - focusing on dates and olive oil
 import ShopPage from './components/ShopPage';
 import HistoryPage from './components/HistoryPage';
