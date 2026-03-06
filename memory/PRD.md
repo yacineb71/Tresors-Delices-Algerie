@@ -1,85 +1,105 @@
-# PRD - Délices et Trésors d'Algérie
+# PRD - Délices & Trésors d'Algérie
 
 ## Aperçu du projet
-Site e-commerce pour la vente de produits algériens (dattes Deglet Nour, huile d'olive de Kabylie).
+Site e-commerce premium pour la vente de produits algériens authentiques.
+**Marque** : Maison suisse valorisant l'excellence du terroir algérien
+**Fondateur** : Yacine Bahloul
 
 **URL principale**: https://ecommerce-admin-29.emergent.host/
+
+## Positionnement
+- **Style** : "Mediterranean Chic" - Premium, élégant, pas folklorique
+- **Couleurs** : Vert olive profond, beige sable, or subtil
+- **Cibles** : Amateurs de gastronomie, cadeaux premium, B2B (restaurants, épiceries fines)
 
 ## Stack technique
 - **Frontend**: React 18 + Tailwind CSS + Shadcn UI
 - **Backend**: FastAPI (Python)
 - **Base de données**: MongoDB
 - **Authentification**: JWT
-- **Vidéo IA**: Sora 2
 
 ## Fonctionnalités implémentées ✅
 
+### Pages principales (Refonte 6 Mars 2025)
+- [x] **Page d'accueil moderne** - Hero plein écran avec bannière utilisateur, sections marques, galerie lifestyle
+- [x] **Page Aswel** (`/marques/aswel`) - Marque verte Kabylie
+- [x] **Page Baghlia KIARED** (`/marques/baghlia`) - Premium noir/or, médaille Dubai
+- [x] **Page Dahbia** (`/marques/dahbia`) - Ultra premium beige/doré
+- [x] **Page Coffrets** (`/coffrets`) - 3 coffrets avec vrais prix CHF
+- [x] **Page Notre Histoire** (`/notre-histoire`) - Histoire de Yacine Bahloul, valeurs, terroirs
+
+### Marques intégrées
+| Marque | Positionnement | Origine |
+|--------|----------------|---------|
+| Aswel | Authentique tradition | Kabylie |
+| Baghlia KIARED | Premium 🏆 Médaille d'Or Dubai 2024 | Algérie |
+| Dahbia | Ultra Premium "L'Or Liquide" | Algérie |
+
+### Coffrets avec prix
+| Coffret | Contenu | Prix |
+|---------|---------|------|
+| Découverte | 250ml Huile + 500g Dattes + 1 épice | 59 CHF |
+| Héritage | 500ml Huile + 1kg Dattes + 2 épices | 79 CHF |
+| Prestige | Dahbia + Dattes branchées + 4 épices + miel | 129 CHF |
+
 ### E-commerce
-- [x] Catalogue de produits avec filtres et recherche
-- [x] Gestion des catégories
+- [x] Catalogue de produits avec filtres
 - [x] Panier d'achat
 - [x] Processus de commande
 - [x] Gestion des stocks
-- [x] Codes promo
-
-### Expérience Immersive (NOUVEAU - 15 Jan 2025)
-- [x] **Vidéo Hero** - Vidéo IA générée (Sora 2) montrant la récolte d'olives en Kabylie
-- [x] **Mode Luxe** - Thème sombre avec accents dorés, toggle dans le header
-- [x] **Vue 360°** - Composant de rotation interactive des produits (prêt à utiliser)
 
 ### Administration
 - [x] Tableau de bord avec statistiques
 - [x] Gestion des produits (CRUD)
 - [x] Gestion des catégories
 - [x] Gestion des commandes
-- [x] Gestion des utilisateurs
 - [x] Paramètres du site
-- [x] Personnalisation visuelle
 - [x] Bibliothèque média
 
-### Utilisateurs
-- [x] Inscription / Connexion
-- [x] Mot de passe oublié
-- [x] Profil utilisateur
+## Images utilisateur intégrées (25 images)
+Toutes les images fournies par l'utilisateur sont intégrées dans :
+- Hero de la page d'accueil
+- Pages marques (Aswel, Baghlia, Dahbia)
+- Page Notre Histoire
+- Page Coffrets
+- Galerie lifestyle
+- Section Dattes
 
-## Fichiers créés cette session
-
-### Vidéo
-- `/app/frontend/public/videos/hero-olive-kabylie.mp4` - Vidéo IA (8s, 2.4 Mo)
-
-### Composants
-- `/app/frontend/src/components/VideoHero.js` - Hero avec vidéo en arrière-plan
-- `/app/frontend/src/components/Product360View.js` - Vue 360° interactive
-- `/app/frontend/src/contexts/LuxuryModeContext.js` - Gestion du mode Luxe
-
-### Styles
-- Ajout CSS dans App.css pour le mode Luxe (gold shimmer, dark theme, etc.)
-
-### Archives téléchargeables
-- `/app/exports/frontend-netlify-delices.archive`
-- `/app/exports/backend-delices.archive`
-- `/app/exports/database-export-fresh.archive`
+## Fichiers créés cette session (6 Mars 2025)
+- `/app/frontend/src/components/ModernHomePage.js` - Nouvelle page d'accueil
+- `/app/frontend/src/components/BrandAswelPage.js` - Page marque Aswel
+- `/app/frontend/src/components/BrandBaghliaPage.js` - Page marque Baghlia
+- `/app/frontend/src/components/BrandDahbiaPage.js` - Page marque Dahbia
+- `/app/frontend/src/components/CoffretsPage.js` - Page coffrets cadeaux
+- `/app/frontend/src/components/NotreHistoirePage.js` - Page histoire
 
 ## Tâches futures (Backlog)
 
 ### P1 - Priorité haute
-- [ ] Intégrer la vue 360° aux fiches produits
-- [ ] Ajouter plus de vidéos (dattes à Biskra)
-- [ ] Chatbot IA conseiller
+- [ ] Connecter les coffrets au système de panier
+- [ ] Ajouter les vrais produits dans la boutique
+- [ ] Intégration paiement (Stripe ou Twint pour Suisse)
 
 ### P2 - Priorité moyenne
-- [ ] Programme de fidélité
-- [ ] Abonnement Box mensuelle
+- [ ] Chatbot IA conseiller
 - [ ] QR Code traçabilité
-- [ ] Intégration WhatsApp
+- [ ] Programme de fidélité
 
 ### P3 - Priorité basse
-- [ ] Créateur de coffrets cadeaux
-- [ ] Avis clients avec photos
+- [ ] Intégration WhatsApp
+- [ ] Newsletter automatisée
+- [ ] Multi-devise (CHF/EUR)
 
 ## Comptes admin
 - Email: admin@delices-algerie.com
 - Password: Admin2024!
 
 ## Dernière mise à jour
-**Date**: 15 janvier 2025
+**Date**: 6 Mars 2025
+
+**Changements majeurs**:
+- Refonte complète de la page d'accueil avec 25 images utilisateur
+- Création de 3 pages marques (Aswel, Baghlia, Dahbia)
+- Création page Coffrets avec prix en CHF
+- Création page Notre Histoire avec story Yacine Bahloul
+- Style "Mediterranean Chic" appliqué
