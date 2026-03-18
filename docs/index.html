@@ -1,11 +1,72 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Bienvenue sur Tresors-Delices-Algerie</title>
-  </head>
-  <body>
-    <h1>Site statique en ligne sur GitHub Pages !</h1>
-    <p>Projet : Tresors-Delices-Algerie.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Trésors & Délices d'Algérie</title>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-white shadow">
+        <nav class="container mx-auto flex justify-between items-center py-5">
+            <div class="text-2xl font-bold text-green-600">
+                Trésors & Délices d'Algérie
+            </div>
+            <ul class="flex space-x-4">
+                <li><a href="#home" class="text-gray-700 hover:text-green-600">Home</a></li>
+                <li><a href="#products" class="text-gray-700 hover:text-green-600">Products</a></li>
+                <li><a href="#about" class="text-gray-700 hover:text-green-600">About Us</a></li>
+                <li><a href="#testimonials" class="text-gray-700 hover:text-green-600">Testimonials</a></li>
+                <li><a href="#contact" class="text-gray-700 hover:text-green-600">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home" class="bg-cover bg-center h-screen" style="background-image: url('hero-image.jpg');">
+        <div class="flex items-center justify-center h-full bg-black bg-opacity-50">
+            <h1 class="text-white text-5xl font-bold">Welcome to Trésors & Délices d'Algérie</h1>
+        </div>
+    </section>
+    <section id="products" class="container mx-auto py-16">
+        <h2 class="text-3xl font-bold text-center mb-8">Featured Products</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-5 rounded shadow">
+                <img src="product1.jpg" alt="Product 1" class="rounded">
+                <h3 class="text-lg font-semibold mt-2">Product 1</h3>
+                <p class="text-gray-600">Description of product 1.</p>
+                <p class="text-green-600 font-semibold">$19.99</p>
+            </div>
+            <div class="bg-white p-5 rounded shadow">
+                <img src="product2.jpg" alt="Product 2" class="rounded">
+                <h3 class="text-lg font-semibold mt-2">Product 2</h3>
+                <p class="text-gray-600">Description of product 2.</p>
+                <p class="text-green-600 font-semibold">$29.99</p>
+            </div>
+            <div class="bg-white p-5 rounded shadow">
+                <img src="product3.jpg" alt="Product 3" class="rounded">
+                <h3 class="text-lg font-semibold mt-2">Product 3</h3>
+                <p class="text-gray-600">Description of product 3.</p>
+                <p class="text-green-600 font-semibold">$39.99</p>
+            </div>
+        </div>
+    </section>
+    <section id="about" class="bg-white py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">About Us</h2>
+            <p class="text-gray-700 text-center">At Trésors & Délices d'Algérie, we offer the finest selection of traditional Algerian products. Discover the taste of our heritage!</p>
+        </div>
+    </section>
+    <section id="testimonials" class="bg-gray-100 py-16">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">What Our Customers Say</h2>
+            <blockquote class="bg-white p-5 rounded shadow text-center">
+                <p class="italic">"Amazing products! The flavor takes me back to my childhood!" - Happy Customer</p>
+            </blockquote>
+        </div>
+    </section>
+    <footer class="bg-white py-4">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600">&copy; 2026 Trésors & Délices d'Algérie. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
 </html>
